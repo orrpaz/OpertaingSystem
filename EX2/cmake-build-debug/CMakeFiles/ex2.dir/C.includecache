@@ -6,19 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/or/Desktop/OpertaingSystem/OpertaingSystem/EX3/main.c
-stdio.h
--
-stdlib.h
--
-fcntl.h
+/home/or/Desktop/OpertaingSystem/OpertaingSystem/EX2/ex2.c
+sys/wait.h
 -
 unistd.h
 -
-sys/stat.h
+stdlib.h
+-
+stdio.h
 -
 string.h
--
-ctype.h
 -
 

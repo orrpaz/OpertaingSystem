@@ -48,10 +48,10 @@ RM = /home/or/Desktop/clion-2017.2.3/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/or/Desktop/OpertaingSystem/OpertaingSystem/EX3
+CMAKE_SOURCE_DIR = /home/or/Desktop/OpertaingSystem/OpertaingSystem/EX2
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/or/Desktop/OpertaingSystem/OpertaingSystem/EX3/cmake-build-debug
+CMAKE_BINARY_DIR = /home/or/Desktop/OpertaingSystem/OpertaingSystem/EX2/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/or/Desktop/OpertaingSystem/OpertaingSystem/EX3/cmake-build-debug/CMakeFiles /home/or/Desktop/OpertaingSystem/OpertaingSystem/EX3/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/or/Desktop/OpertaingSystem/OpertaingSystem/EX2/cmake-build-debug/CMakeFiles /home/or/Desktop/OpertaingSystem/OpertaingSystem/EX2/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/or/Desktop/OpertaingSystem/OpertaingSystem/EX3/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/or/Desktop/OpertaingSystem/OpertaingSystem/EX2/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,44 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named EX3
+# Target rules for targets named ex2
 
 # Build rule for target.
-EX3: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 EX3
-.PHONY : EX3
+ex2: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ex2
+.PHONY : ex2
 
 # fast build rule for target.
-EX3/fast:
-	$(MAKE) -f CMakeFiles/EX3.dir/build.make CMakeFiles/EX3.dir/build
-.PHONY : EX3/fast
+ex2/fast:
+	$(MAKE) -f CMakeFiles/ex2.dir/build.make CMakeFiles/ex2.dir/build
+.PHONY : ex2/fast
 
-main.o: main.c.o
+ex2.o: ex2.c.o
 
-.PHONY : main.o
+.PHONY : ex2.o
 
 # target to build an object file
-main.c.o:
-	$(MAKE) -f CMakeFiles/EX3.dir/build.make CMakeFiles/EX3.dir/main.c.o
-.PHONY : main.c.o
+ex2.c.o:
+	$(MAKE) -f CMakeFiles/ex2.dir/build.make CMakeFiles/ex2.dir/ex2.c.o
+.PHONY : ex2.c.o
 
-main.i: main.c.i
+ex2.i: ex2.c.i
 
-.PHONY : main.i
+.PHONY : ex2.i
 
 # target to preprocess a source file
-main.c.i:
-	$(MAKE) -f CMakeFiles/EX3.dir/build.make CMakeFiles/EX3.dir/main.c.i
-.PHONY : main.c.i
+ex2.c.i:
+	$(MAKE) -f CMakeFiles/ex2.dir/build.make CMakeFiles/ex2.dir/ex2.c.i
+.PHONY : ex2.c.i
 
-main.s: main.c.s
+ex2.s: ex2.c.s
 
-.PHONY : main.s
+.PHONY : ex2.s
 
 # target to generate assembly for a file
-main.c.s:
-	$(MAKE) -f CMakeFiles/EX3.dir/build.make CMakeFiles/EX3.dir/main.c.s
-.PHONY : main.c.s
+ex2.c.s:
+	$(MAKE) -f CMakeFiles/ex2.dir/build.make CMakeFiles/ex2.dir/ex2.c.s
+.PHONY : ex2.c.s
 
 # Help Target
 help:
@@ -158,10 +158,10 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... EX3"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... ex2"
+	@echo "... ex2.o"
+	@echo "... ex2.i"
+	@echo "... ex2.s"
 .PHONY : help
 
 

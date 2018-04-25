@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/or/Desktop/OpertaingSystem/OpertaingSystem/EX3/main.c" "/home/or/Desktop/OpertaingSystem/OpertaingSystem/EX3/cmake-build-debug/CMakeFiles/EX3.dir/main.c.o"
+  "/home/or/Desktop/OpertaingSystem/OpertaingSystem/EX2/ex2.c" "/home/or/Desktop/OpertaingSystem/OpertaingSystem/EX2/cmake-build-debug/CMakeFiles/ex2.dir/ex2.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

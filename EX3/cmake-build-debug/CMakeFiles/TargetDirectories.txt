@@ -1,3 +1,0 @@
-/home/or/Desktop/OpertaingSystem/OpertaingSystem/EX3/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/or/Desktop/OpertaingSystem/OpertaingSystem/EX3/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/or/Desktop/OpertaingSystem/OpertaingSystem/EX3/cmake-build-debug/CMakeFiles/EX3.dir
