@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/EX3_VER2.dir/ex31.c.o  -o EX3_VER2 
