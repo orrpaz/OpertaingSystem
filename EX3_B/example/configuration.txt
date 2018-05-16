@@ -1,0 +1,3 @@
+/home/or/Desktop/src/students
+/home/or/Desktop/src/input.txt
+/home/or/Desktop/src/correctOutput.txt
