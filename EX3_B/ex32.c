@@ -15,6 +15,10 @@
 #define SIZE_FILE 480
 #define SIZE_LINE 160
 #define SIZE_DESC 60
+#define STD_IN 0
+#define STD_OUT 1
+#define STD_ERR 2
+
 
 #define NO_C_FILE "N0_C_FILE"
 #define COMPILATION_ERROR "COMPILATION_ERROR"
@@ -37,37 +41,35 @@ typedef struct StudentGrade {
  * @param line - put each line in char** line.
  * @param fs - file descriptor
  */
-void readConfigureFile(char * configFile,char** line, int fs);
+void readConfigureFile(char* configFile,char** line, int fs);
 /**
  * this method search C file in all folder.
  * @param studentName - name of student.
  * @param dirLocation - path to current location.
  * @param inputLocation - the second line of config file.
  * @param outputLocation  - the third line of config file.
- * @param depth
+ * @param isFound - indicate if c file was found.
  * @return return struct that contain grade;name and description.
  */
-StudentGrade searchCFile(char *studentName, char *dirLocation, char *inputLocation, char *outputLocation, int* isFound);
+StudentGrade searchCFile(char* studentName, char* dirLocation, char* inputLocation, char* outputLocation, int* isFound);
 /**
  * this method run the c file
  * @param studentName - name of student.
  * @param inputLocation - the second line of config file.
  * @param outputLocation  - the third line of config file.
  * @param fileName compile file name.
- * @param depth
  * @return return struct that contain grade;name and description.
  */
-StudentGrade runProgram(char *studentName, char *inputLocation, char *outputLocation, char *fileName);
+StudentGrade runProgram(char* studentName, char* inputLocation, char* outputLocation, char* fileName);
 /**
  * this method compile a c file
  * @param studentName- name of student.
  * @param path path to current location.
  * @param inputLocation - the second line of config file.
  * @param outputLocation - the third line of config file.
- * @param depth
  * @return return struct that contain grade;name and description.
  */
-StudentGrade compileFile(char *studentName, char *path, char *inputLocation, char *outputLocation);
+StudentGrade compileFile(char* studentName, char* path, char* inputLocation, char* outputLocation);
 
 /**
  * write to stderr 'error in system call'
@@ -78,7 +80,7 @@ void errorSystemCall();
  * @param path
  * @return 1 if it is directory; 0 if not
  */
-int isDirectory(const char *path);
+int isDirectory(const char* path);
 /**
  * this method use "comp.out" to cpmpare between 2 files
  * @param file - the output of c file.
@@ -92,7 +94,7 @@ int CompareFiles(char* file, char* output);
  * @param line - path
  * @param name - name of folder
  */
-void buildPath(char *current,const char* line,char* name);
+void buildPath(char* current,const char* line,char* name);
 /**
  * this method open file
  * @param filename - path
@@ -148,6 +150,9 @@ int main(int argc, char *argv[]) {
             isFound = 0;
         }
     }
+    close(fdResults);
+    close(fs);
+    closedir(pDir);
 }
 
 void buildPath(char *current,const char* line,char* name){
@@ -167,7 +172,7 @@ int isExecutable(char *line) {
 }
 
 
-int isDirectory(const char *path) {
+int isDirectory(const char* path) {
 
     struct stat st;
     if (stat(path, &st) != 0)
@@ -178,7 +183,7 @@ int isDirectory(const char *path) {
 
 void errorSystemCall() {
     char msg[] = "Error in system call\n";
-    write(2, msg, sizeof(msg));
+    write(STD_ERR, msg, sizeof(msg));
     exit(EXIT_FAILURE);
 }
 
@@ -190,7 +195,7 @@ int openFile(const char *filename) {
     return fileDescriptor;
 }
 
-void readConfigureFile(char *configFile, char **line, int fs) {
+void readConfigureFile(char* configFile, char** line, int fs) {
     size_t position = 0;
 
     ssize_t numBytesOfRead = read(fs, configFile, SIZE_FILE);
@@ -206,9 +211,9 @@ void readConfigureFile(char *configFile, char **line, int fs) {
     }
 }
 
-StudentGrade runProgram(char *studentName, char *inputLocation, char *outputLocation, char *fileName){
-    int fdOutputOfProgram,fdInput, dupStdout, dupStdin,status;
-    int finishTime, compareFlag , unlink1,unlink2;
+StudentGrade runProgram(char* studentName, char* inputLocation, char* outputLocation, char* fileName){
+    int fdOutputOfProgram,fdInput, dupStdout, dupStdin, status;
+    int compareFlag, unlink1, unlink2;
     pid_t pid;
     pid_t state;
     StudentGrade studentGrade;
@@ -233,9 +238,11 @@ StudentGrade runProgram(char *studentName, char *inputLocation, char *outputLoca
         // child .
     else if (pid == 0) {
         // running the program.
-        // switch stdin and stdout with dup2
-        dupStdout = dup2(fdOutputOfProgram, 1);
-        dupStdin = dup2(fdInput, 0);
+        // switch stdout, now ths standard output will go to 'fdOutputOfProgram'
+        dupStdout = dup2(fdOutputOfProgram, STD_OUT);
+
+        // switch stdin, we get the input from 'fdInput'
+        dupStdin = dup2(fdInput, STD_IN);
         if (dupStdout < 0 || dupStdin < 0) {
             errorSystemCall();
         }
@@ -312,9 +319,7 @@ int CompareFiles(char* file, char* output){
 }
 
 
-
-//void compileFile(char* path){
-StudentGrade compileFile(char *studentName, char *path, char *inputLocation, char *outputLocation) {
+StudentGrade compileFile(char* studentName, char* path, char* inputLocation, char* outputLocation) {
     int status;
     char compiledFileName[SIZE_LINE];
     strcpy(compiledFileName, studentName);
@@ -324,7 +329,7 @@ StudentGrade compileFile(char *studentName, char *path, char *inputLocation, cha
     // child
     if(pid == 0) {
         execvp("gcc",args);
-        fprintf(stderr, "Execution error\n");
+        exit(EXIT_FAILURE);
     }
         // fork error
     else if (pid < 0) {
@@ -332,6 +337,7 @@ StudentGrade compileFile(char *studentName, char *path, char *inputLocation, cha
         // wait.
     } else if (waitpid(pid, &status, 0) != pid) {
        errorSystemCall();
+        // check if child process terminated normally.
     } else if (!WIFEXITED(status)) {
         errorSystemCall();
     } else if (WEXITSTATUS(status) == 1) {
@@ -346,7 +352,7 @@ StudentGrade compileFile(char *studentName, char *path, char *inputLocation, cha
 
 
 
-StudentGrade searchCFile(char *studentName, char *dirLocation, char *inputLocation, char *outputLocation, int *isFound) {
+StudentGrade searchCFile(char* studentName, char* dirLocation, char* inputLocation, char* outputLocation, int* isFound) {
     DIR *pDir;
     struct dirent *pDirent;
     char singleDirPath[MAX_INPUT];
@@ -370,6 +376,7 @@ StudentGrade searchCFile(char *studentName, char *dirLocation, char *inputLocati
                 strcpy(singleDirPath,temp);
                 studentGrade = searchCFile(studentName, singleDirPath, inputLocation, outputLocation, isFound);
                 if(*isFound) {
+                    closedir(pDir);
                     return studentGrade;
                 }
 
@@ -384,7 +391,7 @@ StudentGrade searchCFile(char *studentName, char *dirLocation, char *inputLocati
     }
 
 
-    closedir( pDir );
+    closedir(pDir);
     return studentGrade;
 }
 
