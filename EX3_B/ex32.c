@@ -1,5 +1,4 @@
-// Or paz
-// 311250708
+
 
 #include <stdio.h>
 #include <fcntl.h>
